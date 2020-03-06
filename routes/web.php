@@ -20,3 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/restaurants-registration', 'RestaurantRegistrationController@form'); //grabbing data
+Route::post('/restaurants-registration', 'RestaurantRegistrationController@register'); //storing data
+
