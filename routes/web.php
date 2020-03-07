@@ -24,3 +24,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/restaurants-registration', 'RestaurantRegistrationController@form'); //grabbing data
 Route::post('/restaurants-registration', 'RestaurantRegistrationController@register'); //storing data
 
+Route::get('/restaurants', 'RestaurantRegistrationController@index');
+Route::get('/restaurant/{id}', 'RestaurantRegistrationController@show');
+Route::post('/comment/{id}', 'RestaurantRegistrationController@store');
+Route::delete('/comment/{id}', 'RestaurantRegistrationController@delete');
+Route::post('/comment-reply/{id}', 'CommentReplyController@store');
+
+

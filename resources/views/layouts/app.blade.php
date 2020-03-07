@@ -74,6 +74,8 @@
 
         <main class="py-4">
             @yield('content')
+            @yield('list of restaurants')
+            @yield('restaurant detail')
         </main>
     </div>
 </body>

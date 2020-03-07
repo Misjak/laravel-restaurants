@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Restaurant;
+use App\Comment;
 
 class RestaurantRegistrationController extends Controller
 {
@@ -40,4 +41,46 @@ class RestaurantRegistrationController extends Controller
         return redirect('/home');
     }
 
+    public function index() 
+    {
+        $restaurants = Restaurant::all();
+        return view('restaurants.index', compact('restaurants'));
+    }
+
+    public function show($id) 
+    {
+        $restaurant = Restaurant::findOrFail($id);
+        $user = $restaurant->user;
+
+
+        return view('restaurants.show', compact('restaurant', 'user'));
+    }
+
+    public function store(Request $request, $restaurant_id) 
+    {
+        $this->validate($request, [
+            'comment' => 'required'
+        ]); 
+    
+        $restaurant = Restaurant::findOrFail($restaurant_id);
+        $comment = new Comment;
+    
+        $comment ->restaurant_id = $restaurant_id;
+        $comment ->user_id=auth()->id();
+        $comment ->comment = $request->input('comment');
+    
+        $comment ->save();
+
+        session()->flash('success_message', 'Comment saved.');
+        
+        return redirect()->back();
+    }
+
+    public function delete(Request $request, $id) {
+        $comment= Comment::findOrFail($id);
+
+        $comment->delete();
+
+        return redirect()->back();
+    }
 }
